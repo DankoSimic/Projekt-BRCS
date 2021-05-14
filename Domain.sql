@@ -3,9 +3,10 @@ CREATE database domain;
 use domain;
 
 # Stavljeni svi inicijalni atributi i dodan bloodline_score koji sam zaboravio
+# House maknut not null dok ne napravim house kao entitet
 create table regent (
 	id_regent int primary key auto_increment not null,
-	house int not null,
+	house int,
 	title varchar (50) not null,
 	name varchar (50) not null,
 	realm varchar (50) not null,
@@ -56,3 +57,10 @@ alter table domain add foreign key (province) references province (id_province);
 alter table asset add foreign key (province) references province (id_province);
 alter table holding add foreign key (province) references province (id_province);
 alter table holding add foreign key (regent) references regent (id_regent);
+
+# Test funkcionalnosti
+insert into regent (house,title,name,realm,bloodline,bloodline_strength,bloodline_score,class,level) values
+(null,'Baron','Amalia','Holy Roman Empire',null,'Minor',24,'Fighter',2)
+;
+
+select * from regent;
