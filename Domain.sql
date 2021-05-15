@@ -50,10 +50,52 @@ create table asset (
 	upkeep_asset decimal (2,1)
 );
 
+# dodan house, zasada je efektivno placeholder i da mogu dalje rjesit veze, sjeti se reorganizirati redosljed tablica radi preglednosti
+# back to blackboard, zasada je house to no vjerojatno ce biti out
+create table house (
+	id_house int primary key auto_increment not null,
+	name varchar (50) not null,
+	regent int not null
+);
+
+# popisani moguci uniti za feudal,church i free city domenu
+create table army (
+	id_army int primary key auto_increment not null,
+	german_feudal_knights int,
+	german_servant_knights int,
+	german_church_knights int,
+	order_knights int,
+	sergeant_cavalry int,
+	sergeant_crossbowmen int,
+	sergeant_infantry int,
+	burgher_cavalry int,
+	burgher_crossbowmen int,
+	burgher_infantry int,
+	burger_spearmen int,
+	militia_crossbowmen int,
+	militia_spearmen int,
+	feudal_levy int,
+	mercenary_knights int,
+	mercenary_siege_engineers int,
+	mercenary_cavalry int,
+	mercenary_crossbowmen int,
+	mercenary_infantry int,
+	mercenary_irregulars int,
+	mercenary_bohemian_cavalry int,
+	mercenary_bohemian_crossbowmen int,
+	mercenary_bohemian_infantry int,
+	mercenary_brabançon_pikemen int,
+	mercenary_genoese_crossbowmen int,
+	mercenary_spanish_almogavars int
+);
+
 # Povezan regent s domenom
+# Povezan army s domenom
 # Povezao ostalo, jos poslije regenta s provincijom
+# Povezao house, kao i kod tablica poslije sredi redoslijed house>regent>domena>holding>asset
 alter table domain add foreign key (regent) references regent (id_regent);
 alter table domain add foreign key (province) references province (id_province);
+alter table domain add foreign key (army) references army (id_army);
 alter table asset add foreign key (province) references province (id_province);
 alter table holding add foreign key (province) references province (id_province);
 alter table holding add foreign key (regent) references regent (id_regent);
