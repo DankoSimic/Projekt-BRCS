@@ -152,4 +152,9 @@ insert into regent (house,title,name,realm,bloodline,bloodline_strength,bloodlin
 (null,'Baron','Amalia','Holy Roman Empire',null,'Minor',24,'Fighter',2)
 ;
 
+insert into item (name,item_type,item_subtype,power_description,consumeable) values
+('Sword of Evergreen Forest','Magic Weapon','Sword','Enhancement +1',0),
+('Potion of Healing','Potion','','Healing 1d6',1);
+
 select * from regent;
+select * from item;
