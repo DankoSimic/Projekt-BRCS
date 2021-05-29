@@ -31,7 +31,7 @@ create table domain (
 create table province (
 	id_province int primary key auto_increment not null,
 	name varchar (50) not null,
-	type varchar (50) not null,
+	terrain varchar (50) not null,
 	level int not null,
 	avg_gold_income decimal (3,1),
 	avg_regency_income decimal (3,1),
@@ -104,17 +104,30 @@ create table army (
 
 create table treasury (
 	id_treasury int primary key auto_increment not null,
-	domain int
+	domain int,
+	gold_bars int,
+	regency int
 );
 
 create table item (
 	id_item int primary key auto_increment not null,
-	treasury int
+	treasury int,
+	name varchar (50),
+	item_type varchar (50),
+	item_subtype varchar (50),
+	power_description varchar (50),
+	consumeable boolean
 );
 
 create table lieutenant (
 	id_lieutenant int primary key auto_increment not null,
-	regent int
+	regent int,
+	type varchar (50),
+	bloodline varchar (50),
+	bloodline_strength varchar (50),
+	bloodline_score int,
+	class varchar (50),
+	level int
 );
 
 # Povezan regent s domenom
