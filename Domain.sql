@@ -4,12 +4,13 @@ use domain;
 
 # GENERAL
 # HOUSE removed as entity and is now an attribute in both regent & lieutenant
+# FLEET added as entity
 
 # TABLE ORDER
 # 1.CHARACTERS / 1.1. REGENT / 1.2 LIEUTENANT
 # 2. / 2.1 DOMAIN / 2.2 PROVINCE / 2.3 ASSET / 2.4 HOLDING
 # 3. / 3.1 TREASURY / 3.2 ITEM
-# 4. / 4.1 ARMY  
+# 4. / 4.1 ARMY / 4.2 FLEET 
 
 # 1.1 REGENT
 # CURRENTLY DONE
@@ -122,36 +123,37 @@ create table item (
 );
 
 # 4.1 ARMY
-# NOT DONE
+# DONE
+# ARMY is now simplified
 
 create table army (
 	id_army int primary key auto_increment not null,
-	german_feudal_knights int,
-	german_servant_knights int,
-	german_church_knights int,
-	order_knights int,
-	sergeant_cavalry int,
-	sergeant_crossbowmen int,
-	sergeant_infantry int,
-	burgher_cavalry int,
-	burgher_crossbowmen int,
-	burgher_infantry int,
-	burger_spearmen int,
-	militia_crossbowmen int,
-	militia_spearmen int,
-	feudal_levy int,
-	mercenary_knights int,
-	mercenary_siege_engineers int,
-	mercenary_cavalry int,
-	mercenary_crossbowmen int,
-	mercenary_infantry int,
-	mercenary_irregulars int,
-	mercenary_bohemian_cavalry int,
-	mercenary_bohemian_crossbowmen int,
-	mercenary_bohemian_infantry int,
-	mercenary_brabancon_pikemen int,
-	mercenary_genoese_crossbowmen int,
-	mercenary_spanish_almogavars int
+	unique_units int,
+	elf_units int,
+	knights int,
+	cavalry int,
+	crossbowmen int,
+	infanry int,
+	militia int,
+	levy int,
+	mercenaries int,
+	army_upkeep decimal (5,1)
+);
+
+# 4.2 FLEET
+# DONE
+
+create table fleet (
+	id_fleet int primary key auto_increment not null,
+	unique_ships int,
+	hulk int,
+	cog int,
+	crayer int,
+	drakkar int,
+	knarr int,
+	longship int,
+	keelboat int,
+	navy_upkeep decimal (5,1)
 );
 
 
