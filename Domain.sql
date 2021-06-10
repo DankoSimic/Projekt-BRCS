@@ -2,15 +2,42 @@ DROP database IF EXISTS domain;
 CREATE database domain;
 use domain;
 
-# Stavljeni svi inicijalni atributi i dodan bloodline_score koji sam zaboravio
-# House maknut not null dok ne napravim house kao entitet
-# House dodan natrag
+# GENERAL
+# HOUSE removed as entity and is now an attribute in both regent & lieutenant
+
+# TABLE ORDER
+# 1.CHARACTERS / 1.1. REGENT / 1.2 LIEUTENANT
+
+# 1.1 REGENT
+# CURRENTLY DONE
+
 create table regent (
 	id_regent int primary key auto_increment not null,
-	house int,
 	title varchar (50) not null,
 	name varchar (50) not null,
+	house varchar (50) not null,
+	dynasty varchar (50) not null,
 	realm varchar (50) not null,
+	bloodline varchar (50),
+	bloodline_strength varchar (50),
+	bloodline_score int,
+	class varchar (50),
+	level int
+);
+
+# 1.2 LIEUTENANT
+# CURRENTLY DONE
+# TYPE is for Lieutenant, Advisor or Hireling
+# REGENT remains not null in case of freelance characters
+# HOUSE & DYANSTY remain not null since lieutenants are not neccesarily members of the nobility
+
+create table lieutenant (
+	id_lieutenant int primary key auto_increment not null,
+	regent int,
+	name varchar (50) not null,
+	type varchar (50) not null,
+	house varchar (50),
+	dynasty varchar (50),
 	bloodline varchar (50),
 	bloodline_strength varchar (50),
 	bloodline_score int,
@@ -58,13 +85,7 @@ create table asset (
 	upkeep_asset decimal (2,1)
 );
 
-# dodan house, zasada je efektivno placeholder i da mogu dalje rjesit veze, sjeti se reorganizirati redosljed tablica radi preglednosti
-# back to blackboard, zasada je house to no vjerojatno ce biti out
-create table house (
-	id_house int primary key auto_increment not null,
-	name varchar (50) not null,
-	regent int not null
-);
+
 
 # popisani moguci uniti za feudal,church i free city domenu
 # promjenio atribut zbog non standardnog charactera - brabancon pikes
@@ -119,16 +140,8 @@ create table item (
 	consumeable boolean
 );
 
-create table lieutenant (
-	id_lieutenant int primary key auto_increment not null,
-	regent int,
-	type varchar (50),
-	bloodline varchar (50),
-	bloodline_strength varchar (50),
-	bloodline_score int,
-	class varchar (50),
-	level int
-);
+
+
 
 # Povezan regent s domenom
 # Povezan army s domenom
@@ -144,7 +157,6 @@ alter table holding add foreign key (province) references province (id_province)
 alter table holding add foreign key (regent) references regent (id_regent);
 alter table treasury add foreign key (domain) references domain (id_domain);
 alter table item add foreign key (treasury) references treasury (id_treasury);
-alter table regent add foreign key (house) references house (id_house);
 alter table lieutenant add foreign key (regent) references regent (id_regent);
 
 # Test funkcionalnosti
