@@ -7,6 +7,9 @@ use domain;
 
 # TABLE ORDER
 # 1.CHARACTERS / 1.1. REGENT / 1.2 LIEUTENANT
+# 2. / 2.1 DOMAIN / 2.2 PROVINCE / 2.3 ASSET / 2.4 HOLDING
+# 3. / 3.1 TREASURY / 3.2 ITEM
+# 4. / 4.1 ARMY  
 
 # 1.1 REGENT
 # CURRENTLY DONE
@@ -45,16 +48,20 @@ create table lieutenant (
 	level int
 );
 
-# Postavljen dio atributa, barem ono što zasad je foreign key
+# 2.1 DOMAIN
+# CURRENTLY DONE
+
 create table domain (
 	id_domain int primary key auto_increment not null,
+	name varchar (50) not null,
 	regent int not null,
 	province int not null,
 	army int not null
 );
 
-# Dodao province zasada samo kako bi stavio veze, poslije dodati jos atributa
-# Dodano nesto atributa
+# 2.2 PROVINCE
+# CURRENTLY DONE
+
 create table province (
 	id_province int primary key auto_increment not null,
 	name varchar (50) not null,
@@ -65,7 +72,21 @@ create table province (
 	fort boolean
 );
 
-# Vidi poslije da li dodati fort upkeep tu kada budes uspostavljao turn, income i expenditure
+# 2.3 ASSET
+# CURRENTLY DONE
+# TYPE is for PORT, ROAD, BRIDGE, HOUSE OF WISDOM and similar provincial buildings or non standard assets  
+
+create table asset (
+	id_asset int primary key auto_increment not null,
+	province int not null,
+	type_asset varchar (50),
+	upkeep_asset decimal (2,1)
+);
+
+# 2.4 HOLDING
+# CURRENTLY DONE
+# TYPE is for LAW, GUILD, TEMPLE, SOURCE
+
 create table holding (
 	id_holding int primary key auto_increment not null,
 	province int not null,
@@ -77,18 +98,32 @@ create table holding (
 	fort boolean
 );
 
-# Za assete kao sto su road, port i ostalo
-create table asset (
-	id_asset int primary key auto_increment not null,
-	province int not null,
-	type_asset varchar (50),
-	upkeep_asset decimal (2,1)
+# 3.1 TREASURY
+# NOT DONE
+
+create table treasury (
+	id_treasury int primary key auto_increment not null,
+	domain int,
+	gold_bars int,
+	regency int
 );
 
+# 3.2 ITEM
+# NOT DONE
 
+create table item (
+	id_item int primary key auto_increment not null,
+	treasury int,
+	name varchar (50),
+	item_type varchar (50),
+	item_subtype varchar (50),
+	power_description varchar (50),
+	consumeable boolean
+);
 
-# popisani moguci uniti za feudal,church i free city domenu
-# promjenio atribut zbog non standardnog charactera - brabancon pikes
+# 4.1 ARMY
+# NOT DONE
+
 create table army (
 	id_army int primary key auto_increment not null,
 	german_feudal_knights int,
@@ -118,29 +153,6 @@ create table army (
 	mercenary_genoese_crossbowmen int,
 	mercenary_spanish_almogavars int
 );
-
-
-# Dodano još nekoliko entiteta koji će trebati
-# Razmisli o entitetu character za LT i Regenta pošto će imati zajedničkih podataka
-
-create table treasury (
-	id_treasury int primary key auto_increment not null,
-	domain int,
-	gold_bars int,
-	regency int
-);
-
-create table item (
-	id_item int primary key auto_increment not null,
-	treasury int,
-	name varchar (50),
-	item_type varchar (50),
-	item_subtype varchar (50),
-	power_description varchar (50),
-	consumeable boolean
-);
-
-
 
 
 # Povezan regent s domenom
