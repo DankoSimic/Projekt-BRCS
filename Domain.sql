@@ -174,11 +174,12 @@ alter table treasury add foreign key (domain) references domain (id_domain);
 alter table item add foreign key (treasury) references treasury (id_treasury);
 alter table lieutenant add foreign key (regent) references regent (id_regent);
 
-# SINGLE DOMAIN insert
+# DOMAIN insert
 
 insert into regent (title,name,race,house,dynasty,realm,bloodline,bloodline_strength,bloodline_score,class,level) values
 ("Baron","Amalia von Erzheim","Human","von Erzheim zu Engen","von Erzheim","Holy Auran Empire","Ku","Minor",24,"Warmistress",4),
-("Baron","Anastasia von Hirschreich","Elf","von Hirschreich","von Hirschreich","Holy Auran Empire","Unknown","Major",40,"Nightblade",6)
+("Baron","Anastasia von Hirschreich","Elf","von Hirschreich","von Hirschreich","Holy Auran Empire","Unknown","Major",40,"Nightblade",6),
+("Duke","Rebecca von Erzheim","Human","von Erzheim","von Erzheim","Holy Auran Empire","Ku","Minor",20,"Unknown",null)
 ;
 
 insert into lieutenant (regent,name,race,type,class,level) values 
@@ -189,13 +190,34 @@ insert into lieutenant (regent,name,race,type,class,level) values
 
 insert into domain (name,regent) values
 ("Barony of Engen",1),
-("Barony of Stoutgarten",2)
+("Barony of Stoutgarten",2),
+("Duchy of Swabia",3)
 ;
 
 insert into province (domain,name,terrain,level,avg_gold_income,avg_regency_income,fort) values
 (1,"Engen","Hills",8,2,2,1),
 (1,"Hulm","Hills",2,1,1,0),
-(2,"Stoutgarten","Heavy Forest",2,1,1,0)
+(2,"Stoutgarten","Heavy Forest",2,1,1,0),
+(3,"Erzheim","Low Mountains",5,2,2,1),
+(3,"Ravenskreuz","Light Forest",5,2,2,1)
+;
+
+insert into holding (province,regent,type,level,avg_gold_income,avg_regency_income,fort) values
+(1,1,"Law",6,4,4,0),
+(1,1,"Guild",2,1,1,0),
+(1,1,"Temple",3,1,1,0),
+(1,2,"Guild",6,2,2,0),
+(2,1,"Law",1,0,0,0),
+(3,2,"Law",1,0,0,0),
+(3,2,"Source",3,0,0,0)
+;
+
+insert into army (domain,unique_units,elf_units,knights,cavalry,crossbowmen,infanry,militia,levy,mercenaries,army_upkeep) values
+(1,1,0,2,0,0,0,0,0,0,6)
+;
+
+insert into fleet (domain,unique_ships,hulk,cog,crayer,drakkar,knarr,longship,keelboat,navy_upkeep) values
+(1,0,0,0,0,0,2,5,15,3)
 ;
 
 insert into item (name,item_type,item_subtype,power_description,consumeable) values
@@ -205,4 +227,7 @@ insert into item (name,item_type,item_subtype,power_description,consumeable) val
 select * from regent;
 select * from lieutenant;
 select * from province;
+select * from holding;
+select * from army;
+select * from fleet;
 select * from item;
