@@ -264,6 +264,19 @@ insert into fleet (domain,unique_ships,hulk,cog,crayer,drakkar,knarr,longship,ke
 (1,0,0,0,0,0,2,5,15,3)
 ;
 
+insert into treasury (domain,gold_bars,regency) values
+(1,23,27)
+;
+
+insert into revenue (treasury,income,tax,upkeep,profit,province_income,guild_income,temple_income,trade_income,claim_income,other_income) values
+(1,21,-5,-14,2,13,2,3,3,0,0)
+;
+
+insert into trade (domain,start_holding,end_holding,trade_value,trade_income) values
+(1,2,0,2,1),
+(2,6,0,6,3)
+;
+
 insert into item (name,item_type,item_subtype,power_description,consumeable) values
 ('Sword of Evergreen Forest','Magic Weapon','Sword','Enhancement +1',0),
 ('Potion of Healing','Potion','','Healing 1d6',1);
@@ -275,3 +288,6 @@ select * from holding;
 select * from army;
 select * from fleet;
 select * from item;
+select * from treasury;
+select * from revenue;
+select * from trade;
