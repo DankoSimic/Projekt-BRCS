@@ -9,7 +9,7 @@ use domain;
 # ORDER
 # 1.CHARACTERS / "1.1. REGENT" / "1.2 LIEUTENANT"
 # 2. / "2.1 DOMAIN" / "2.2 PROVINCE" / "2.3 ASSET" / "2.4 HOLDING"
-# 3. / "3.1 TREASURY" / "3.2 ITEM"
+# 3. / "3.1 TREASURY" / "3.2 REVENUE" / "3.3 ITEM"
 # 4. / "4.1 ARMY" / "4.2 FLEET" 
 # 5. / "5.1 FOREIGN KEYS"
 
@@ -33,9 +33,10 @@ create table regent (
 
 # "1.2 LIEUTENANT"
 # CURRENTLY DONE
-# TYPE is for Lieutenant, Advisor or Hireling
+# TYPE is for Henchman, Mercenary, Advisor, Specialist or Contact
 # REGENT remains not null in case of freelance characters
 # HOUSE & DYANSTY remain not null since lieutenants are not neccesarily members of the nobility
+
 
 create table lieutenant (
 	id_lieutenant int primary key auto_increment not null,
@@ -108,10 +109,35 @@ create table treasury (
 	id_treasury int primary key auto_increment not null,
 	domain int,
 	gold_bars int,
-	regency int
+	regency int,
 );
 
-# "3.2 ITEM"
+# "3.2 REVENUE"
+
+create table revenue (
+	id_revenue int primary key auto_increment not null,
+	treasury int not null,
+	income int,
+	tax int,
+	upkeep int,
+	profit int,
+	province_income int,
+	guild_income int,
+	temple_income int,
+	trade_income int,
+	claim_income int,
+	other_income int,
+	court_upkeep int,
+	domain_upkeep int,
+	lieutenant_upkeep int,
+	fortification_upkeep int,
+	army_upkeep int,
+	navy_upkeep int,
+	asset_upkeep int,
+	other_upkeep int
+);
+
+# "3.3 ITEM"
 # NOT DONE
 
 create table item (
@@ -171,6 +197,7 @@ alter table holding add foreign key (regent) references regent (id_regent);
 alter table army add foreign key (domain) references domain (id_domain);
 alter table fleet add foreign key (domain) references domain (id_domain);
 alter table treasury add foreign key (domain) references domain (id_domain);
+alter table revenue add foreign key (treasury) references treasury (id_treasury);
 alter table item add foreign key (treasury) references treasury (id_treasury);
 alter table lieutenant add foreign key (regent) references regent (id_regent);
 
@@ -183,9 +210,14 @@ insert into regent (title,name,race,house,dynasty,realm,bloodline,bloodline_stre
 ;
 
 insert into lieutenant (regent,name,race,type,class,level) values 
-(1,"Wolfgang von Falkenstein","Human","Lieutenant","Fighter",3),
-(1,"Ernest von Schaffhausen","Human","Lieutenant","Venturer",3),
-(1,"Corrado","Human","Lieutenant","Fighter",3)
+(1,"Wolfgang von Falkenstein","Human","Henchman","Fighter",3),
+(1,"Ernest von Schaffhausen","Human","Henchman","Venturer",3),
+(1,"Corrado","Human","Henchman","Fighter",3),
+(1,"Surgeon","Human","Specialist","Surgeon",0),
+(1,"Houndmaster","Human","Specialist","Animal Handler",0),
+(1,"Ursula the Witch of Engen","Human","Contact","Human",0),
+(1,"Johan Biel","Human","Contact","Human",0),
+(1,"Konrad der Schreckenritter","Human","Contact","Bandit",0)
 ;
 
 insert into domain (name,regent) values
