@@ -8,7 +8,7 @@ use domain;
 
 # ORDER
 # 1.CHARACTERS / "1.1. REGENT" / "1.2 LIEUTENANT"
-# 2. / "2.1 DOMAIN" / "2.2 PROVINCE" / "2.3 ASSET" / "2.4 HOLDING"
+# 2. / "2.1 DOMAIN" / "2.2 PROVINCE" / "2.3 ASSET" / "2.4 HOLDING" / "2.5 TRADE ROUTES"
 # 3. / "3.1 TREASURY" / "3.2 REVENUE" / "3.3 ITEM"
 # 4. / "4.1 ARMY" / "4.2 FLEET" 
 # 5. / "5.1 FOREIGN KEYS"
@@ -102,6 +102,17 @@ create table holding (
 	fort boolean
 );
 
+# "2.5 TRADE ROUTES"
+
+create table trade (
+	id_route int primary key auto_increment not null,
+	domain int,
+	start_holding int,
+	end_holding int,
+	trade_value int,
+	trade_income int
+);
+
 # "3.1 TREASURY"
 # NOT DONE
 
@@ -109,7 +120,7 @@ create table treasury (
 	id_treasury int primary key auto_increment not null,
 	domain int,
 	gold_bars int,
-	regency int,
+	regency int
 );
 
 # "3.2 REVENUE"
@@ -194,6 +205,7 @@ alter table province add foreign key (domain) references domain (id_domain);
 alter table asset add foreign key (province) references province (id_province);
 alter table holding add foreign key (province) references province (id_province);
 alter table holding add foreign key (regent) references regent (id_regent);
+alter table trade add foreign key (domain) references domain (id_domain);
 alter table army add foreign key (domain) references domain (id_domain);
 alter table fleet add foreign key (domain) references domain (id_domain);
 alter table treasury add foreign key (domain) references domain (id_domain);
